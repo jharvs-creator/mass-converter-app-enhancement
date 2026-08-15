@@ -116,6 +116,58 @@ class _MassConverterState extends State<MassConverter> {
         elevation: 0,
       ),
 
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+
+            const SizedBox(height: 22),
+
+            Card(
+              color: Colors.white,
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+
+              child: Padding(
+                  padding: const  EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Convert From',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0XFF126B40),
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    DropdownButtonFormField<String>(
+                        initialValue: fromUnit,
+                        isExpanded: true,
+                        items: units.map((unit){
+                          return DropdownMenuItem(value: unit, child:Text(unit));
+                        }).toList(),
+
+                        onChanged: (value){
+                          if (value != null) {
+                            setState(() => fromUnit = value);
+                          }
+                        })
+                  ],
+                ),
+              ),
+
+            )
+
+          ],
+        ),
+
+      ),
+
     );
   }
 }
