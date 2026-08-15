@@ -12,9 +12,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.green,
-            primary: Colors.green,
-            surface: Colors.white,
+          seedColor: Colors.green,
+          primary: Colors.green,
+          surface: Colors.white,
         ),
         scaffoldBackgroundColor: const Color(0xfff2faf5),
         inputDecorationTheme: InputDecorationTheme(
@@ -47,7 +47,7 @@ class MassConverter extends StatefulWidget {
 class _MassConverterState extends State<MassConverter> {
   final TextEditingController controller = TextEditingController();
 
-  String fromUnit = 'Tonne';
+  String fromUnit = 'Gram';
   String toUnit = 'Kilogram';
   String result = '';
 
@@ -131,11 +131,11 @@ class _MassConverterState extends State<MassConverter> {
               ),
 
               child: Padding(
-                  padding: const  EdgeInsets.all(20),
+                padding: const  EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Convert From',
+                    const Text('From:',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -148,6 +148,12 @@ class _MassConverterState extends State<MassConverter> {
                     DropdownButtonFormField<String>(
                         initialValue: fromUnit,
                         isExpanded: true,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.input_rounded,
+                            color: Color(0xff168a52),
+                          ),
+                        ),
                         items: units.map((unit){
                           return DropdownMenuItem(value: unit, child:Text(unit));
                         }).toList(),
@@ -156,12 +162,176 @@ class _MassConverterState extends State<MassConverter> {
                           if (value != null) {
                             setState(() => fromUnit = value);
                           }
-                        })
+                        }),
+
+                    const SizedBox(height: 16),
+
+                    Center(
+                      child: IconButton.filled(
+                        onPressed: swapUnits,
+                        style: IconButton.styleFrom(
+                          backgroundColor: const Color(0xffd9f1e2),
+                          foregroundColor: const Color(0xff168a52),
+                        ),
+                        icon: const Icon(Icons.swap_vert_rounded),
+                        tooltip: 'Swap units',
+                      ),
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    const Text('To:',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff126b40),
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    DropdownButtonFormField<String>(
+                        initialValue: toUnit,
+                        isExpanded: true,
+                        decoration: const InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.output_rounded,
+                            color: Color(0xff168a52),
+                          ),
+                        ),
+                        items: units.map((unit){
+                          return DropdownMenuItem(value: unit, child:Text(unit));
+                        }).toList(),
+
+                        onChanged: (value){
+                          if (value != null) {
+                            setState(() => toUnit = value);
+                          }
+                        }),
+
+                    const SizedBox(height: 22),
+
+                    const Text('Value',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xff126b40),
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+
+                    TextField(
+                        controller: controller,
+                        keyboardType: const TextInputType.numberWithOptions(
+                          decimal: true,
+                        ),
+                        decoration: const InputDecoration(
+                            hintText: 'Enter a value'
+                        )
+                    ),
+
+                    const SizedBox(height: 22),
+
+                    SizedBox(
+                      width: double.infinity,
+                      height: 52,
+                      child: FilledButton.icon(
+                          onPressed: convert,
+                          label: const Text(
+                            'Convert',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: const Color(0xff168a52),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                      ),
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    SizedBox(
+                      width: double.infinity,
+                      height: 48,
+                      child: OutlinedButton.icon(
+                        onPressed: clear,
+                        label: const Text(
+                          'Clear',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: const Color(0xff168a52),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                    ),
+
+
                   ],
                 ),
               ),
+            ),
 
-            )
+            if (result.isNotEmpty) ...[
+              const SizedBox(height: 20),
+
+              Card(
+                color: const Color(0xffd9f1e2),
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(18),
+                  child: Column(
+                    children: [
+                      const Text('Result',
+                          style: TextStyle(
+                              color: Color(0xff126b40),
+                              fontWeight: FontWeight.bold,
+                          ),
+                      ),
+
+                      const SizedBox(height: 6),
+                      Text(
+                        '$result $toUnit',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Color(0xff126b40),
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        )
+                      ),
+
+                    ],
+                  ),
+                ),
+              )
+
+            ],
+
+            const SizedBox(height: 40),
+
+            const Text('COPYRIGHT © 2026 | Jharvey Owen Tamayo ',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 11,
+                color: Colors.grey,
+              ),
+            ),
 
           ],
         ),
