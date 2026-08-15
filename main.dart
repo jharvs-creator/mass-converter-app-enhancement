@@ -45,79 +45,77 @@ class MassConverter extends StatefulWidget {
 }
 
 class _MassConverterState extends State<MassConverter> {
-  TextEditingController controller = TextEditingController();
+  final TextEditingController controller = TextEditingController();
 
-  String selectedUnit = ("Kilogram");
-  double result = 0;
+  String fromUnit = 'Tonne';
+  String toUnit = 'Kilogram';
+  String result = '';
+
+  final Map<String, double> gramsPerUnit = {
+    'Tonne': 1000000,
+    'Kilogram': 1000,
+    'Gram': 1,
+    'Milligram': 0.001,
+    'Microgram': 0.000001,
+    'Imperial Ton': 1016046.9088,
+    'US Ton': 907184.74,
+    'Stone': 6350.29318,
+    'Pound': 453.59237,
+    'Ounce': 28.349523125,
+  };
 
   void convert() {
-    double value = double.parse(controller.text);
+    final input = double.tryParse(controller.text);
 
-    if (selectedUnit == "Kilogram") {
-      result = value * 1000; // kg to gram
-    } else {
-      result = value / 1000; // gram to kg
+    if (input ==null) {
+      setState((){
+        result = 'Please enter a valid number';
+      });
+      return;
     }
 
-    setState(() {});
+    final grams = input * gramsPerUnit[fromUnit]!;
+    final convertedValue = grams / gramsPerUnit[toUnit]!;
+
+    setState(() {
+      result = convertedValue.toStringAsFixed(2);
+    });
+  }
+
+  void clear() {
+    setState(() {
+      controller.clear();
+      result = '';
+    });
+  }
+
+  void swapUnits() {
+    setState(() {
+      final temporary = fromUnit;
+      fromUnit = toUnit;
+      toUnit = temporary;
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final units = gramsPerUnit.keys.toList();
+
     return Scaffold(
       appBar: AppBar(
-        title: Text("Mass Converter"),
+        centerTitle: true,
+        backgroundColor: const Color(0xFF168a52),
+        foregroundColor: Colors.white,
+        title: const Text("Mass Converter", style: TextStyle(fontWeight: FontWeight.bold)),
+        elevation: 0,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            TextField(
-              controller: controller,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: "Enter Value",
-              ),
-            ),
 
-            SizedBox(height: 20),
-
-            DropdownButton<String>(
-              value: selectedUnit,
-              isExpanded: true,
-              items: [
-                DropdownMenuItem(
-                  value: "Kilogram",
-                  child: Text("Kilogram to Gram"),
-                ),
-                DropdownMenuItem(
-                  value: "Gram",
-                  child: Text("Gram to Kilogram"),
-                ),
-              ],
-              onChanged: (value) {
-                setState(() {
-                  selectedUnit = value!;
-                });
-              },
-            ),
-
-            SizedBox(height: 20),
-
-            ElevatedButton(
-              onPressed: convert,
-              child: Text("Convert"),
-            ),
-
-            SizedBox(height: 20),
-
-            Text(
-              "Result: $result",
-              style: TextStyle(fontSize: 32),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
