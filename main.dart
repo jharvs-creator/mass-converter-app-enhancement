@@ -57,11 +57,13 @@ class _MassConverterState extends State<MassConverter> {
     'Gram': 1,
     'Kilogram': 1000,
     'Metric Ton': 1000000,
-    'Imperial Ton': 1016046.9088,
-    'US Ton': 907184.74,
-    'Stone': 6350.29318,
-    'Pound': 453.59237,
-    'Ounce': 28.349523125,
+    'Ounce': 28.35,
+    'Pound': 453.6,
+    'Stone': 6350,
+    'US Ton': 907200,
+    'Imperial Ton': 1016046,
+    'Carat': 0.5,
+    'Atomic Mass Unit': 0.00000000000000000000000166053904
   };
 
   void convert() {
