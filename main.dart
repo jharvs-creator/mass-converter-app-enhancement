@@ -52,11 +52,11 @@ class _MassConverterState extends State<MassConverter> {
   String result = '';
 
   final Map<String, double> gramsPerUnit = {
-    'Tonne': 1000000,
-    'Kilogram': 1000,
-    'Gram': 1,
-    'Milligram': 0.001,
     'Microgram': 0.000001,
+    'Milligram': 0.001,
+    'Gram': 1,
+    'Kilogram': 1000,
+    'Metric Ton': 1000000,
     'Imperial Ton': 1016046.9088,
     'US Ton': 907184.74,
     'Stone': 6350.29318,
@@ -135,7 +135,7 @@ class _MassConverterState extends State<MassConverter> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('From:',
+                    const Text('Source:',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -180,7 +180,7 @@ class _MassConverterState extends State<MassConverter> {
 
                     const SizedBox(height: 16),
 
-                    const Text('To:',
+                    const Text('Destination:',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
