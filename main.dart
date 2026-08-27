@@ -137,7 +137,7 @@ class _MassConverterState extends State<MassConverter> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Source:',
+                    const Text('Source Unit:',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -182,7 +182,7 @@ class _MassConverterState extends State<MassConverter> {
 
                     const SizedBox(height: 16),
 
-                    const Text('Destination:',
+                    const Text('Destination Unit:',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
